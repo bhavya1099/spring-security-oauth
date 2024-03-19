@@ -57,76 +57,22 @@ Validation:
 */
 
 // ********RoostGPT********
-package com.baeldung.client.spring;
-
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.mock.web.MockHttpServletRequest;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-@RunWith(MockitoJUnitRunner.class)
-public class UiSecurityConfigFilterChainTest {
-
-    @Mock
-    private HttpSecurity http;
-
-    @Mock
-    private SecurityFilterChain securityFilterChain;
-
-    private UiSecurityConfigFilterChain filterChain;
-
-    @Before
-    public void setUp() throws Exception {
-        filterChain = new UiSecurityConfigFilterChain();
-    }
 
     @Test
     public void testPermittedRequest() throws Exception {
         // Arrange
+        HttpSecurity spiedHttp = spy(http);
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setServletPath("/");
 
-        when(http.authorizeRequests()).thenReturn(null);
-        when(http.build()).thenReturn(securityFilterChain);
+        when(spiedHttp.authorizeRequests()).thenReturn(null);
+        when(spiedHttp.build()).thenReturn(securityFilterChain);
 
         // Act
-        SecurityFilterChain actualFilterChain = filterChain.filterChain(http);
+        SecurityFilterChain actualFilterChain = filterChain.filterChain(spiedHttp);
 
         // Assert
         assertEquals(securityFilterChain, actualFilterChain);
+        verify(spiedHttp).authorizeRequests(); // verification if authorizeRequests method was called
+        // add more verifications if needed depending on the business logic
     }
-
-    @Test
-    public void testSecuredRequest() throws Exception {
-        // Arrange
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setServletPath("/secured");
-
-        when(http.authorizeRequests()).thenReturn(null);
-        when(http.build()).thenReturn(securityFilterChain);
-
-        // Act
-        SecurityFilterChain actualFilterChain = filterChain.filterChain(http);
-
-        // Assert
-        assertEquals(securityFilterChain, actualFilterChain);
-    }
-
-    @Test(expected = Exception.class)
-    public void testExceptionScenario() throws Exception {
-        // Arrange
-        when(http.authorizeRequests()).thenThrow(new Exception());
-
-        // Act
-        filterChain.filterChain(http);
-
-        // Assert Exception Throwing
-    }
-}

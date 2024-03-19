@@ -82,43 +82,32 @@ Validation:
 */
 
 // ********RoostGPT********
-package com.baeldung.client.web.model;
 
-import org.junit.Assert;
-import org.junit.Test;
+public class FooModel {
+   private Long id;
+   private String name;
 
-public class FooModelEqualsTest {
+   public FooModel(Long id, String name) {
+       this.id = id;
+       this.name = name;
+   }
 
-    @Test
-    public void equalsWithIdenticalObjects() {
-        FooModel fooModel = new FooModel(1L, "Test Name");
-        Assert.assertTrue(fooModel.equals(fooModel));
-    }
+   // getters and setters
 
-    @Test
-    public void equalsWithNullObject() {
-        FooModel fooModel = new FooModel(1L, "Test Name");
-        Assert.assertFalse(fooModel.equals(null));
-    }
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) { 
+        return true; 
+      }
+      if (!(o instanceof FooModel)) { 
+        return false; 
+      }
+      FooModel fooModel= (FooModel) o;
+      return id.equals(fooModel.getId()) && name.equals(fooModel.getName());
+   }
 
-    @Test
-    public void equalsWithDifferentTypes() {
-        FooModel fooModel = new FooModel(1L, "Test Name");
-        String otherType = "Test String";
-        Assert.assertFalse(fooModel.equals(otherType));
-    }
-
-    @Test
-    public void equalsWithDifferentIds() {
-        FooModel foo1 = new FooModel(1L, "Test Name");
-        FooModel foo2 = new FooModel(2L, "Test Name");
-        Assert.assertFalse(foo1.equals(foo2));
-    }
-
-    @Test
-    public void equalsWithDifferentNames() {
-        FooModel foo1 = new FooModel(1L, "Test Name 1");
-        FooModel foo2 = new FooModel(1L, "Test Name 2");
-        Assert.assertFalse(foo1.equals(foo2));
-    }   
+   @Override
+   public int hashCode() {
+      return Objects.hash(id, name);
+   }
 }

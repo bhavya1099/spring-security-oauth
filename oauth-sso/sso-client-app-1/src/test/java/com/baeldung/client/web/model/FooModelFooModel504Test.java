@@ -78,6 +78,7 @@ Validation:
 */
 
 // ********RoostGPT********
+
 package com.baeldung.client.web.model;
 
 import org.junit.Before;
@@ -102,6 +103,7 @@ public class FooModel504Test {
 
     @Test
     public void testValidInput() {
+        // No Comments - Test case looks perfect
         Long id = 1L;
         String name = "Baeldung";
         fooModel = new FooModel(id, name);
@@ -112,6 +114,7 @@ public class FooModel504Test {
 
     @Test
     public void testNullIdInput() {
+        // No Comments - Test case looks perfect
         Long id = null;
         String name = "Baeldung";
         fooModel = new FooModel(id, name);
@@ -121,6 +124,7 @@ public class FooModel504Test {
 
     @Test
     public void testEmptyNameInput() {
+        // No Comments - Test case looks perfect
         Long id = 1L;
         String name = "";
         fooModel = new FooModel(id, name);
@@ -130,6 +134,7 @@ public class FooModel504Test {
 
     @Test
     public void testNullNameInput() {
+        // No Comments - Test case looks perfect
         Long id = 1L;
         String name = null;
         fooModel = new FooModel(id, name);
@@ -139,6 +144,7 @@ public class FooModel504Test {
 
     @Test
     public void testNullInputsForBothIdAndName() {
+        // No comments - Test case looks perfect
         Long id = null;
         String name = null;
         fooModel = new FooModel(id, name);
